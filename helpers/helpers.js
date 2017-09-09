@@ -1,6 +1,5 @@
 const actionHelpers = require('./actionHelpers');
 const apiFunctionHelpers = require('./apiFunctionHelpers');
-const hostname = 'https://863e98d4.ngrok.io/';
 const { selectMovieFallbackAction, sendWelcomeMessageAction } = actionHelpers;
 const { sendTextMessage, sendAttachments, getImageDetails, uploadImage, download } = apiFunctionHelpers;
 
