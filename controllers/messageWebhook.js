@@ -5,7 +5,7 @@ const request = require('request');
 let userInfo=null;
 
 
-const {processMessage,processPostback}=helpers;
+const {processMessage,processPostback,processQuickLink}=helpers;
 
 const getUserInfo = (userid, callback) => {
     request({
@@ -19,7 +19,16 @@ module.exports = (req, res) => {
     if (req.body.object === 'page') {
         req.body.entry.forEach(entry => {
             entry.messaging.forEach(event => {
-                if (event.message && (event.message.text || event.message.attachments)) {
+                if(event.message.quick_reply){
+                    if (!userInfo) {
+                        getUserInfo(event.sender.id, (err, response, body) => {
+                            userInfo = JSON.parse(body);
+                            processQuickLink(event,userInfo);
+                        });
+                    } else {                       
+                         processQuickLink(event,userInfo);
+                    }
+                }else if (event.message && (event.message.text || event.message.attachments)) {
                     if (!userInfo) {
                         getUserInfo(event.sender.id, (err, response, body) => {
                             userInfo = JSON.parse(body);

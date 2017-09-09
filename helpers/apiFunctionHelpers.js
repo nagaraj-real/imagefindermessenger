@@ -18,7 +18,7 @@ function download(url, callback) {
 }
 
 
-function getImageDetails(callback, imageUrl) {
+function getImageDetails(callback, imageUrl,detection) {
     request({
         url: googleVisionApi,
         qs: { key: GOOGLE_ACCESS_TOKEN },
@@ -31,7 +31,7 @@ function getImageDetails(callback, imageUrl) {
                     },
                     features: [
                         {
-                            type: "LABEL_DETECTION"
+                            type: detection
                         }
                     ],
                     imageContext: {
